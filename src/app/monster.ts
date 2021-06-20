@@ -1,6 +1,8 @@
 import { LimitedResource } from "./limitedResource";
+import { MonsterDefinition } from "./monsterDefiniton";
 
 export interface Monster {
-	name: string;
+	id: number;
 	hp: LimitedResource;
+	definition: MonsterDefinition;
 }

@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@airjp73/dice-notation": "^2.2.2",
     "@angular/animations": "~12.0.5",
     "@angular/common": "~12.0.5",
     "@angular/compiler": "~12.0.5",
