@@ -18,10 +18,6 @@ export class GameService {
 		this.enterDungeon ();
 	}
 
-	dump():string {
-		return JSON.stringify(this, null, "  ");
-	}
-
 	enterDungeon() {
 		this.dungeon.reset ();
 		this.timer = window.setInterval(() => this.tick (), 1000);
