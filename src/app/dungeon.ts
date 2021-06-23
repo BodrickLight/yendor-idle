@@ -20,4 +20,12 @@ export class Dungeon {
 		var level = generator.generate (this.currentLevel);
 		this.monsters = level.monsters;
 	}
+
+	update() {
+		for(var monster of this.monsters) {
+			if (monster.hp.current <= 0) {
+				this.monsters = this.monsters.filter(x => x.id !== monster.id);
+			}
+		}
+	}
 }

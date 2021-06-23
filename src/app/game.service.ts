@@ -28,5 +28,6 @@ export class GameService {
 
 	tick() {
 		this.heroService.attack(this.dungeon.monsters[0]);
+    this.dungeon.update();
 	}
 }

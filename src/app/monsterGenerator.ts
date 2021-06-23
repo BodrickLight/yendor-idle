@@ -3,6 +3,7 @@ import { Monster } from "./monster";
 import { MONSTERS } from "./monsters";
 
 export class MonsterGenerator {
+	static _id: number = 0;
 	generate(monsterId: number): Monster {
 		var definition = MONSTERS.find(x => x.id === monsterId);
 		if(!definition) {
@@ -12,7 +13,7 @@ export class MonsterGenerator {
 		var hp = roll(definition.hp).result;
 		return {
 			definition: definition,
-			id: monsterId,
+			id: MonsterGenerator._id++,
 			hp: {
 				current: hp,
 				max: hp

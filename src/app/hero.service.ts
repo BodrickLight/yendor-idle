@@ -19,5 +19,9 @@ export class HeroService {
 
   attack(target: Monster) {
     this.logger.log(`You attack the ${target.definition.name}!`);
+    target.hp.current = target.hp.current - 1;
+    if (target.hp.current <= 0) {
+      this.logger.log(`You kill the ${target.definition.name}!`)
+    }
   }
 }
