@@ -1,16 +1,32 @@
 import { Injectable } from '@angular/core';
-import { Game } from './game';
+import { Dungeon } from './dungeon';
+import { HeroService } from './hero.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  constructor() { }
+	private timer!: number;
+  public startTime: number;
+  public dungeon: Dungeon;
 
-  getGame(): Game {
-    return this.game;
-  }
+  constructor(private heroService: HeroService) {
+		this.dungeon = new Dungeon();
+		this.startTime = new Date().getTime ();
+		this.enterDungeon ();
+	}
 
-  game: Game = new Game ()
+	dump():string {
+		return JSON.stringify(this, null, "  ");
+	}
+
+	enterDungeon() {
+		this.dungeon.reset ();
+		this.timer = window.setInterval(() => this.tick (), 1000);
+	}
+
+	tick() {
+		this.heroService.attack(this.dungeon.monsters[0]);
+	}
 }

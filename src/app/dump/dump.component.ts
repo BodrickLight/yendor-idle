@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Game } from '../game';
 import { GameService } from '../game.service';
 
 @Component({
@@ -9,11 +8,8 @@ import { GameService } from '../game.service';
 })
 export class DumpComponent implements OnInit {
 
-  constructor(private gameService: GameService) { }
+  constructor(public gameService: GameService) { }
 
   ngOnInit(): void {
-    this.game = this.gameService.getGame();
   }
-
-  game: Game = new Game ();
 }
