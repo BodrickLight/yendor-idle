@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CombatHandlerService } from './combat-handler.service';
 import { Dungeon } from './dungeon';
 import { HeroService } from './hero.service';
 
@@ -11,7 +12,7 @@ export class GameService {
   public startTime: number;
   public dungeon: Dungeon;
 
-  constructor(private heroService: HeroService) {
+  constructor(private heroService: HeroService, private combatHandler: CombatHandlerService) {
 		this.dungeon = new Dungeon();
 		this.startTime = new Date().getTime ();
 		this.enterDungeon ();
@@ -27,7 +28,7 @@ export class GameService {
 	}
 
 	tick() {
-		this.heroService.attack(this.dungeon.monsters[0]);
+		this.combatHandler.resolveCombat(this.dungeon.monsters[0]);
     this.dungeon.update();
 	}
 }

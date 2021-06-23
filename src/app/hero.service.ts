@@ -9,12 +9,16 @@ import { Monster } from './monster';
 export class HeroService {
 
   hp: LimitedResource;
+  accuracy: number;
+  evasion: number;
 
   constructor(private logger: LogService) {
     this.hp = {
       max: 10,
       current: 10
-    }
+    },
+    this.accuracy = 10,
+    this.evasion = 10
   }
 
   attack(target: Monster) {

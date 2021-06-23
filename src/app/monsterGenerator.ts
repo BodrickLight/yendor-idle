@@ -17,7 +17,9 @@ export class MonsterGenerator {
 			hp: {
 				current: hp,
 				max: hp
-			}
+			},
+			evasion: definition.evasion,
+			accuracy: definition.accuracy
 		};
 	}
 }

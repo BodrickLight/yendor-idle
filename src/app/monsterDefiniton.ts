@@ -4,4 +4,6 @@ export interface MonsterDefinition {
 	hp: string;
 	glyph: string;
 	color: string;
+	evasion: number;
+	accuracy: number;
 }
