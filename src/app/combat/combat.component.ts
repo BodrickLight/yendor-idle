@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameService } from '../game.service';
+import { DungeonService } from '../dungeon.service';
 import { HeroService } from '../hero.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { HeroService } from '../hero.service';
 })
 export class CombatComponent implements OnInit {
 
-  constructor(public gameService: GameService, public heroService: HeroService) { }
+  constructor(public hero: HeroService, public dungeon: DungeonService) { }
 
   ngOnInit(): void {
   }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CombatHandlerService } from './combat-handler.service';
-import { Dungeon } from './dungeon';
+import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
+import { LogService } from './log.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,9 @@ import { HeroService } from './hero.service';
 export class GameService {
 
 	private timer!: number;
-  public startTime: number;
-  public dungeon: Dungeon;
+	public startTime: number;
 
-  constructor(private heroService: HeroService, private combatHandler: CombatHandlerService) {
-		this.dungeon = new Dungeon();
+	constructor(private hero: HeroService, private dungeon: DungeonService, private combatHandler: CombatHandlerService, private logger: LogService) {
 		this.startTime = new Date().getTime ();
 		this.enterDungeon ();
 	}
@@ -24,7 +23,11 @@ export class GameService {
 	}
 
 	tick() {
-		this.combatHandler.resolveCombat(this.dungeon.monsters[0]);
-    this.dungeon.update();
+		this.combatHandler.resolveCombat();
+		this.dungeon.update();
+		if (this.hero.hp.current <= 0) {
+			this.logger.log("You die...");
+			window.clearInterval(this.timer);
+		}
 	}
 }

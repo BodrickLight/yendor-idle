@@ -1,17 +1,22 @@
-import { roll } from '@airjp73/dice-notation';
 import { Injectable } from '@angular/core';
+import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LogService } from './log.service';
-import { Monster } from './monster';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CombatHandlerService {
 
-  constructor(private hero: HeroService, private logger: LogService) { }
+  constructor(private hero: HeroService, private logger: LogService, private dungeon: DungeonService) { }
 
-  resolveCombat(monster: Monster) {
+  resolveCombat(): void {
+    if (!this.dungeon.level.currentRoom || !this.dungeon.level.currentRoom.monster) {
+      return;
+    }
+
+    var monster = this.dungeon.level.currentRoom.monster;
+
     if (this.rollToHit(this.hero.accuracy, monster.evasion)) {
       this.logger.log(`You hit the ${monster.definition.name}.`);
       monster.hp.current--;
