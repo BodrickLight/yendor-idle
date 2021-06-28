@@ -10,14 +10,14 @@
 			<span>Dungeon Level: {{dungeon.currentLevel}}</span>
 		</div>
 		<div>
-			<span>Current Room: {{dungeon.level.roomNumber}} / {{dungeon.level.floorSize}}</span>
+			<span>Current Encounter: {{dungeon.level.encounterNumber}} / {{dungeon.level.floorSize}}</span>
 		</div>
 	</div>
 
 	<pre style="font-size: 18px;">
 		/-----\
 		|.....|
-		+..@<app-monster *ngIf="dungeon.level.currentRoom && dungeon.level.currentRoom.monster" [monster]="dungeon.level.currentRoom.monster"></app-monster><span *ngIf="!dungeon.level.currentRoom || !dungeon.level.currentRoom.monster">.</span>.+
+		+..@<app-monster *ngIf="dungeon.level.currentEncounter && dungeon.level.currentEncounter.monsters[0]" [monster]="dungeon.level.currentEncounter.monsters[0]"></app-monster><span *ngIf="!dungeon.level.currentEncounter || !dungeon.level.currentEncounter.monsters[0]">.</span>.+
 		|.....|
 		\-----/
 	</pre>

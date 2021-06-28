@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LogType } from 'src/app/logType';
 import { CombatHandlerService } from './combat-handler.service';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
@@ -26,7 +27,7 @@ export class GameService {
 		this.combatHandler.resolveCombat();
 		this.dungeon.update();
 		if (this.hero.hp.current <= 0) {
-			this.logger.log("You die...");
+			this.logger.log("You die...", LogType.HeroDeath);
 			window.clearInterval(this.timer);
 		}
 	}

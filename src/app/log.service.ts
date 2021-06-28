@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { LogType } from './logType';
+import { LogMessage } from './logMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +11,12 @@ export class LogService {
     this.messages = [];
   }
 
-  messages: string[];
+  messages: LogMessage[];
 
-  log(message: string) {
-    this.messages.push (message)
+  log(message: string, type: LogType) {
+    this.messages.push ({
+      message,
+      type
+    })
   }
 }

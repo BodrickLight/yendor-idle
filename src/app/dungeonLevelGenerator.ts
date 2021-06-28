@@ -1,27 +1,29 @@
 import { DungeonLevel } from "./dungeonLevel";
 import { MonsterGenerator } from "./monsterGenerator";
 import { MONSTERS } from "./monsters";
-import { Room } from "./room";
+import { Encounter } from "./encounter";
 
 export class DungeonLevelGenerator {
 	generate(dungeonLevel: number): DungeonLevel {
 		var mGenerator = new MonsterGenerator();
-		var rooms = [];
+		var encounters = [];
 		for (var i = 0; i < 10; i++) {
-			rooms.push(this.generateRoom(mGenerator));
+			encounters.push(this.generateEncounter(mGenerator));
 		}
 
-		return new DungeonLevel (dungeonLevel, rooms);
+		return new DungeonLevel (dungeonLevel, encounters);
 	}
 
-	private generateRoom(mGenerator: MonsterGenerator): Room {
+	private generateEncounter(mGenerator: MonsterGenerator): Encounter {
 		if (Math.random() > 0.5) {
-			return {};
+			return {
+				monsters: []
+			};
 		}
 
 		var monsterType = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
 		return {
-			monster: mGenerator.generate(monsterType.id)
+			monsters: [mGenerator.generate(monsterType.id)]
 		}
 	}
 }

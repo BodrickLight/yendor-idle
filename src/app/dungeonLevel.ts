@@ -1,32 +1,32 @@
-import { Room } from "./room";
+import { Encounter } from "./encounter";
 
 export class DungeonLevel {
-	constructor(public readonly level: number, private readonly rooms: Room []) {
+	constructor(public readonly level: number, private readonly encounters: Encounter []) {
 		this.complete = false;
-		this.currentRoomIdx = 0;
-		this.roomNumber = this.currentRoomIdx + 1;
-		this.currentRoom = this.rooms[this.currentRoomIdx];
-		this.floorSize = rooms.length;
+		this.currentEncounterIdx = 0;
+		this.encounterNumber = this.currentEncounterIdx + 1;
+		this.currentEncounter = this.encounters[this.currentEncounterIdx];
+		this.floorSize = encounters.length;
 	}
 
-	currentRoom?: Room;
-	private currentRoomIdx: number;
+	currentEncounter?: Encounter;
+	private currentEncounterIdx: number;
 	complete: boolean;
 
 	floorSize: number;
-	roomNumber: number;
+	encounterNumber: number;
 
 	update() {
-		if (this.complete || !this.currentRoom) {
+		if (this.complete || !this.currentEncounter) {
 			return;
 		}
 
-		if (!this.currentRoom.monster || this.currentRoom.monster.hp.current <= 0) {
-			this.currentRoomIdx++;
-			this.roomNumber = this.currentRoomIdx + 1;
-			this.currentRoom = this.rooms[this.currentRoomIdx];
+		if (this.currentEncounter.monsters.every (m => m.hp.current <= 0)) {
+			this.currentEncounterIdx++;
+			this.encounterNumber = this.currentEncounterIdx + 1;
+			this.currentEncounter = this.encounters[this.currentEncounterIdx];
 		}
 
-		this.complete = this.currentRoomIdx >= this.rooms.length;
+		this.complete = this.currentEncounterIdx >= this.encounters.length;
 	}
 }
