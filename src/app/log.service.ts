@@ -17,6 +17,10 @@ export class LogService {
     this.messages.push ({
       message,
       type
-    })
+    });
+    var toDelete = this.messages.length - 100;
+    if (toDelete > 0) {
+      this.messages.splice(0, toDelete);
+    }
   }
 }

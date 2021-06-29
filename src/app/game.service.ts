@@ -20,7 +20,7 @@ export class GameService {
 
 	enterDungeon() {
 		this.dungeon.reset ();
-		this.timer = window.setInterval(() => this.tick (), 1000);
+		this.timer = window.setInterval(() => this.tick (), 100);
 	}
 
 	tick() {

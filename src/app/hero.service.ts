@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LimitedResource } from './limitedResource';
-import { LogService } from './log.service';
-import { Monster } from './monster';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +10,7 @@ export class HeroService {
   accuracy: number;
   evasion: number;
 
-  constructor(private logger: LogService) {
+  constructor() {
     this.hp = {
       max: 10,
       current: 10

@@ -27,5 +27,3 @@ export class DungeonLevelGenerator {
 		}
 	}
 }
-
-const LEVEL_SIZE = 50;
