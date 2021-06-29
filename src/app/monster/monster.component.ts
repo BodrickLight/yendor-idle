@@ -4,14 +4,10 @@ import { Monster } from '../monster';
 @Component({
   selector: 'app-monster',
   templateUrl: './monster.component.html',
-  styleUrls: ['./monster.component.scss']
+  styleUrls: ['./monster.component.scss'],
 })
-export class MonsterComponent implements OnInit {
+export class MonsterComponent {
   @Input() monster!: Monster;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() {}
 }

@@ -6,28 +6,24 @@ import { LogType } from '../logType';
 @Component({
   selector: 'app-log',
   templateUrl: './log.component.html',
-  styleUrls: ['./log.component.scss']
+  styleUrls: ['./log.component.scss'],
 })
-export class LogComponent implements OnInit {
-
-  constructor(public logService: LogService) { }
-
-  ngOnInit(): void {
-  }
+export class LogComponent {
+  constructor(public logService: LogService) {}
 
   getColor(message: LogMessage): string {
     switch (message.type) {
       case LogType.HeroDeath:
-        return "red";
+        return 'red';
       case LogType.HeroAttackHit:
       case LogType.MonsterAttackHit:
-        return "white";
+        return 'white';
       case LogType.HeroAttackMiss:
       case LogType.MonsterAttackMiss:
-        return "grey";
+        return 'grey';
       case LogType.Generic:
       default:
-        return "white";
+        return 'white';
     }
   }
 }

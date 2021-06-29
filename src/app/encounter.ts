@@ -1,5 +1,5 @@
-import { Monster } from "./monster";
+import { Monster } from './monster';
 
 export interface Encounter {
-	monsters: Monster[]
+  monsters: Monster[];
 }

@@ -1,36 +1,36 @@
 import { Injectable } from '@angular/core';
 
-import { DungeonLevel } from "./dungeonLevel";
-import { DungeonLevelGenerator } from "./dungeonLevelGenerator";
+import { DungeonLevel } from './dungeonLevel';
+import { DungeonLevelGenerator } from './dungeonLevelGenerator';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DungeonService {
-	currentLevel: number;
-	level: DungeonLevel;
+  currentLevel: number;
+  level: DungeonLevel;
 
-	constructor() {
-		this.currentLevel = 1;
-		this.level = new DungeonLevel (1, []);
-	}
+  constructor() {
+    this.currentLevel = 1;
+    this.level = new DungeonLevel(1, []);
+  }
 
-	reset() {
-		this.currentLevel = 1;
-		this.generateLevel();
-	}
+  reset() {
+    this.currentLevel = 1;
+    this.generateLevel();
+  }
 
-	generateLevel() {
-		var generator = new DungeonLevelGenerator();
-		var level = generator.generate (this.currentLevel);
-		this.level = level;
-	}
+  generateLevel() {
+    var generator = new DungeonLevelGenerator();
+    var level = generator.generate(this.currentLevel);
+    this.level = level;
+  }
 
-	update() {
-		this.level.update();
-		if (this.level.complete) {
-			this.currentLevel++;
-			this.generateLevel();
-		}
-	}
+  update() {
+    this.level.update();
+    if (this.level.complete) {
+      this.currentLevel++;
+      this.generateLevel();
+    }
+  }
 }
