@@ -21,6 +21,8 @@ export class LogComponent {
       case LogType.HeroAttackMiss:
       case LogType.MonsterAttackMiss:
         return 'grey';
+      case LogType.HeroLevelUp:
+        return 'lightblue';
       case LogType.Generic:
       default:
         return 'white';

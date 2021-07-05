@@ -1,9 +1,16 @@
+import { Attack } from "./attack";
+import { Size } from "./size";
+
 export interface MonsterDefinition {
-  id: number;
-  name: string;
-  hp: string;
-  glyph: string;
+  ac: number;
+  attacks: Attack[];
   color: string;
-  evasion: number;
-  accuracy: number;
+  difficulty: number;
+  experience: number;
+  frequency: number;
+  glyph: string;
+  mId: number;
+  level: number;
+  name: string;
+  size: Size;
 }

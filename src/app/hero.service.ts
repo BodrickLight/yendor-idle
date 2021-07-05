@@ -1,20 +1,49 @@
+import { roll } from '@airjp73/dice-notation';
 import { Injectable } from '@angular/core';
 import { LimitedResource } from './limitedResource';
+import { LogService } from './log.service';
+import { LogType } from './logType';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeroService {
   hp: LimitedResource;
-  accuracy: number;
-  evasion: number;
+  ac: number;
+  xp: number;
+  xl: number;
 
-  constructor() {
-    (this.hp = {
-      max: 10,
-      current: 10,
-    }),
-      (this.accuracy = 10),
-      (this.evasion = 10);
+  constructor(private logger: LogService) {
+    this.hp = {
+      max: 16,
+      current: 16,
+    };
+    this.ac = 10;
+    this.xp = 0;
+    this.xl = 1;
   }
+
+  addXp(xp: number) {
+    this.xp += xp;
+    if (this.xp > this.xpBreakpoints[this.xl - 1]) {
+      this.xl++;
+      var hpIncrease = roll("1d10").result;
+      this.hp.current += hpIncrease;
+      this.hp.max += hpIncrease;
+      this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp)
+    }
+  }
+
+  xpBreakpoints = [
+    20,
+    40,
+    80,
+    160,
+    320,
+    640,
+    1280,
+    2560,
+    5120,
+    10000
+  ];
 }

@@ -23,7 +23,7 @@ export class DungeonLevelGenerator {
 
     var monsterType = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
     return {
-      monsters: [mGenerator.generate(monsterType.id)],
+      monsters: [mGenerator.generate(monsterType.mId)],
     };
   }
 }

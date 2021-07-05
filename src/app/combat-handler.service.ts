@@ -1,8 +1,10 @@
+import { roll } from '@airjp73/dice-notation';
 import { Injectable } from '@angular/core';
 import { LogType } from 'src/app/logType';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LogService } from './log.service';
+import { Monster } from './monster';
 
 @Injectable({
   providedIn: 'root',
@@ -24,13 +26,15 @@ export class CombatHandlerService {
       return;
     }
 
-    if (this.rollToHit(this.hero.accuracy, monster.evasion)) {
+    if (this.rollToHitMonster(this.hero, monster)) {
       this.logger.log(
         `You hit the ${monster.definition.name}.`,
         LogType.HeroAttackHit
       );
-      monster.hp.current--;
+      var damage = roll("1d6").result;
+      monster.hp.current -= damage;
       if (monster.hp.current <= 0) {
+        this.hero.addXp(monster.definition.experience);
         this.logger.log(
           `You kill the ${monster.definition.name}!`,
           LogType.MonsterDeath
@@ -44,21 +48,38 @@ export class CombatHandlerService {
       );
     }
 
-    if (this.rollToHit(monster.accuracy, this.hero.evasion)) {
-      this.logger.log(
-        `The ${monster.definition.name} hits you!`,
-        LogType.MonsterAttackHit
-      );
-      this.hero.hp.current--;
-    } else {
-      this.logger.log(
-        `The ${monster.definition.name} misses you.`,
-        LogType.MonsterAttackMiss
-      );
+    for (var i = 0; i < monster.definition.attacks.length; i++) {
+      var attack = monster.definition.attacks[i];
+
+      if (this.rollToHitHero(this.hero, monster, i)) {
+        this.logger.log(
+          `The ${monster.definition.name} ${attack.type}s you!`,
+          LogType.MonsterAttackHit
+        );
+        var damage = roll(attack.damage).result;
+        this.hero.hp.current -= damage;
+      } else {
+        this.logger.log(
+          `The ${monster.definition.name} misses you.`,
+          LogType.MonsterAttackMiss
+        );
+    }
     }
   }
 
-  rollToHit(accuracy: number, evasion: number) {
-    return Math.random() * accuracy > Math.random() * evasion;
+  rollToHitHero(hero: HeroService, monster: Monster, attackNumber: number) {
+    var dice = "1d" + 20 + attackNumber;
+    var result = roll(dice).result;
+    
+    var target = 10 + hero.ac + monster.definition.level;
+    return result < target;
+  }
+
+  rollToHitMonster(hero: HeroService, monster: Monster) {
+    var dice = "1d20";
+    var result = roll(dice).result;
+
+    var target = 2 + hero.xl + monster.definition.ac;
+    return result < target;
   }
 }
