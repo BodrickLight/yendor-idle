@@ -68,11 +68,11 @@ export class CombatHandlerService {
       return;
     }
 
+    const damage = roll(attack.damage).result;
     this.logger.log(
-      `The ${monster.definition.name} ${attack.type}s you!`,
+      `The ${monster.definition.name} ${attack.type}s you for ${damage} damage!`,
       LogType.MonsterAttackHit,
     );
-    const damage = roll(attack.damage).result;
     this.hero.hp.current -= damage;
   }
 

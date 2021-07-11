@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DungeonLevel } from './dungeonLevel';
 import { DungeonLevelGenerator } from './dungeonLevelGenerator';
+import { HeroService } from './hero.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class DungeonService {
 
   level: DungeonLevel;
 
-  constructor() {
+  constructor(private hero: HeroService) {
     this.currentLevel = 1;
     this.level = new DungeonLevel(1, []);
   }
@@ -23,7 +24,7 @@ export class DungeonService {
 
   generateLevel() {
     const generator = new DungeonLevelGenerator();
-    const level = generator.generate(this.currentLevel);
+    const level = generator.generate(this.hero, this.currentLevel);
     this.level = level;
   }
 

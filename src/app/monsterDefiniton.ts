@@ -1,5 +1,4 @@
 import { Attack } from './attack';
-import { Size } from './size';
 
 export interface MonsterDefinition {
   ac: number;
@@ -12,5 +11,5 @@ export interface MonsterDefinition {
   mId: number;
   level: number;
   name: string;
-  size: Size;
+  size: string;
 }
