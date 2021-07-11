@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Save } from './save';
 
+const SAVEKEY = 'save';
+
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
-
   load(): Save {
-    var saved = localStorage.getItem(SAVEKEY);
+    const saved = localStorage.getItem(SAVEKEY);
     if (!saved) {
       return {};
     }
@@ -23,5 +23,3 @@ export class LocalStorageService {
     localStorage.clear();
   }
 }
-
-const SAVEKEY: string = 'save';

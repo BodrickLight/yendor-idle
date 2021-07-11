@@ -1,4 +1,4 @@
 export interface Attack {
-  type: string,
-  damage: string
+  type: string;
+  damage: string;
 }

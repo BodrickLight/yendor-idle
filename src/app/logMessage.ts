@@ -1,4 +1,4 @@
-import { LogType } from "src/app/logType";
+import { LogType } from './logType';
 
 export interface LogMessage {
   message: string;

@@ -5,9 +5,9 @@ import { Encounter } from './encounter';
 
 export class DungeonLevelGenerator {
   generate(dungeonLevel: number): DungeonLevel {
-    var mGenerator = new MonsterGenerator();
-    var encounters = [];
-    for (var i = 0; i < 10; i++) {
+    const mGenerator = new MonsterGenerator();
+    const encounters = [];
+    for (let i = 0; i < 10; i += 1) {
       encounters.push(this.generateEncounter(mGenerator));
     }
 
@@ -21,7 +21,7 @@ export class DungeonLevelGenerator {
       };
     }
 
-    var monsterType = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
+    const monsterType = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
     return {
       monsters: [mGenerator.generate(monsterType.mId)],
     };

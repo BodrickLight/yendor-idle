@@ -1,5 +1,5 @@
-import { Attack } from "./attack";
-import { Size } from "./size";
+import { Attack } from './attack';
+import { Size } from './size';
 
 export interface MonsterDefinition {
   ac: number;

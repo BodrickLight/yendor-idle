@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LogType } from 'src/app/logType';
+import { LogType } from './logType';
 import { CombatHandlerService } from './combat-handler.service';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
@@ -10,18 +10,20 @@ import { LogService } from './log.service';
   providedIn: 'root',
 })
 export class GameService {
-  private timer!: number;
   public startTime: number = new Date().getTime();
-  public deathCount: number = 0;
+
+  public deathCount = 0;
+
+  private timer!: number;
 
   constructor(
     private hero: HeroService,
     private dungeon: DungeonService,
     private combatHandler: CombatHandlerService,
     private logger: LogService,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
   ) {
-    var save = storage.load();
+    const save = storage.load();
     if (save && save.deathCount) {
       this.deathCount = save.deathCount;
     }
@@ -38,7 +40,7 @@ export class GameService {
     this.dungeon.update();
     if (this.hero.hp.current <= 0) {
       this.logger.log('You die...', LogType.HeroDeath);
-      this.deathCount++;
+      this.deathCount += 1;
       this.storage.save({
         deathCount: this.deathCount,
       });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Monster } from '../monster';
 
 @Component({
@@ -8,6 +8,4 @@ import { Monster } from '../monster';
 })
 export class MonsterComponent {
   @Input() monster!: Monster;
-
-  constructor() {}
 }

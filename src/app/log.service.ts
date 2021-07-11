@@ -3,22 +3,21 @@ import { LogType } from './logType';
 import { LogMessage } from './logMessage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LogService {
+  messages: LogMessage[];
 
   constructor() {
     this.messages = [];
   }
 
-  messages: LogMessage[];
-
   log(message: string, type: LogType) {
-    this.messages.push ({
+    this.messages.push({
       message,
-      type
+      type,
     });
-    var toDelete = this.messages.length - 100;
+    const toDelete = this.messages.length - 100;
     if (toDelete > 0) {
       this.messages.splice(0, toDelete);
     }

@@ -6,5 +6,5 @@ export enum LogType {
   MonsterAttackMiss = 'monsterAttackMiss',
   MonsterDeath = 'monsterDeath',
   HeroDeath = 'heroDeath',
-  HeroLevelUp = "heroLevelUp",
+  HeroLevelUp = 'heroLevelUp',
 }

@@ -1,5 +1,5 @@
-import { LimitedResource } from "./limitedResource";
-import { MonsterDefinition } from "./monsterDefiniton";
+import { LimitedResource } from './limitedResource';
+import { MonsterDefinition } from './monsterDefiniton';
 
 export interface Monster {
   id: number;

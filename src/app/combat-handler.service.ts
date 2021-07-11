@@ -1,6 +1,7 @@
 import { roll } from '@airjp73/dice-notation';
 import { Injectable } from '@angular/core';
-import { LogType } from 'src/app/logType';
+import { LogType } from './logType';
+import { Attack } from './attack';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LogService } from './log.service';
@@ -13,7 +14,8 @@ export class CombatHandlerService {
   constructor(
     private hero: HeroService,
     private logger: LogService,
-    private dungeon: DungeonService
+    private dungeon: DungeonService,
+  // eslint-disable-next-line no-empty-function
   ) {}
 
   resolveCombat(): void {
@@ -21,65 +23,72 @@ export class CombatHandlerService {
       return;
     }
 
-    var monster = this.dungeon.level.currentEncounter.monsters[0];
+    const monster = this.dungeon.level.currentEncounter.monsters[0];
     if (!monster) {
       return;
     }
 
-    if (this.rollToHitMonster(this.hero, monster)) {
-      this.logger.log(
-        `You hit the ${monster.definition.name}.`,
-        LogType.HeroAttackHit
-      );
-      var damage = roll("1d6").result;
-      monster.hp.current -= damage;
-      if (monster.hp.current <= 0) {
-        this.hero.addXp(monster.definition.experience);
-        this.logger.log(
-          `You kill the ${monster.definition.name}!`,
-          LogType.MonsterDeath
-        );
-        return;
-      }
-    } else {
+    this.attackMonster(monster);
+
+    monster.definition.attacks.forEach((attack, i) => {
+      this.attackHero(monster, attack, i);
+    });
+  }
+
+  attackMonster(monster: Monster) {
+    if (!this.rollToHitMonster(monster)) {
       this.logger.log(
         `You miss the ${monster.definition.name}.`,
-        LogType.HeroAttackMiss
+        LogType.HeroAttackMiss,
       );
+      return;
     }
 
-    for (var i = 0; i < monster.definition.attacks.length; i++) {
-      var attack = monster.definition.attacks[i];
-
-      if (this.rollToHitHero(this.hero, monster, i)) {
-        this.logger.log(
-          `The ${monster.definition.name} ${attack.type}s you!`,
-          LogType.MonsterAttackHit
-        );
-        var damage = roll(attack.damage).result;
-        this.hero.hp.current -= damage;
-      } else {
-        this.logger.log(
-          `The ${monster.definition.name} misses you.`,
-          LogType.MonsterAttackMiss
-        );
-    }
+    this.logger.log(
+      `You hit the ${monster.definition.name}.`,
+      LogType.HeroAttackHit,
+    );
+    const damage = roll('1d6').result;
+    monster.hp.current -= damage;
+    if (monster.hp.current <= 0) {
+      this.hero.addXp(monster.definition.experience);
+      this.logger.log(
+        `You kill the ${monster.definition.name}!`,
+        LogType.MonsterDeath,
+      );
     }
   }
 
-  rollToHitHero(hero: HeroService, monster: Monster, attackNumber: number) {
-    var dice = "1d" + 20 + attackNumber;
-    var result = roll(dice).result;
-    
-    var target = 10 + hero.ac + monster.definition.level;
+  attackHero(monster: Monster, attack: Attack, attackNumber: number) {
+    if (!this.rollToHitHero(monster, attackNumber)) {
+      this.logger.log(
+        `The ${monster.definition.name} misses you.`,
+        LogType.MonsterAttackMiss,
+      );
+      return;
+    }
+
+    this.logger.log(
+      `The ${monster.definition.name} ${attack.type}s you!`,
+      LogType.MonsterAttackHit,
+    );
+    const damage = roll(attack.damage).result;
+    this.hero.hp.current -= damage;
+  }
+
+  rollToHitHero(monster: Monster, attackNumber: number) {
+    const dice = `1d${20}${attackNumber}`;
+    const { result } = roll(dice);
+
+    const target = 10 + this.hero.ac + monster.definition.level;
     return result < target;
   }
 
-  rollToHitMonster(hero: HeroService, monster: Monster) {
-    var dice = "1d20";
-    var result = roll(dice).result;
+  rollToHitMonster(monster: Monster) {
+    const dice = '1d20';
+    const { result } = roll(dice);
 
-    var target = 2 + hero.xl + monster.definition.ac;
+    const target = 2 + this.hero.xl + monster.definition.ac;
     return result < target;
   }
 }

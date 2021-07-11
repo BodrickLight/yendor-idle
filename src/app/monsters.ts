@@ -1,5 +1,5 @@
-import { MonsterDefinition } from "./monsterDefiniton";
-import { Size } from "./size";
+import { MonsterDefinition } from './monsterDefiniton';
+import { Size } from './size';
 
 export const MONSTERS: MonsterDefinition[] = [
   {
@@ -15,9 +15,9 @@ export const MONSTERS: MonsterDefinition[] = [
     difficulty: 1,
     attacks: [
       {
-        type: "bite",
-        damage: "1d2"
-      }
+        type: 'bite',
+        damage: '1d2',
+      },
     ],
   },
   {
@@ -33,10 +33,10 @@ export const MONSTERS: MonsterDefinition[] = [
     difficulty: 1,
     attacks: [
       {
-        type: "bite",
-        damage: "1d2"
-      }
-    ]
+        type: 'bite',
+        damage: '1d2',
+      },
+    ],
   },
   {
     mId: 3,
@@ -51,10 +51,10 @@ export const MONSTERS: MonsterDefinition[] = [
     ac: 7,
     attacks: [
       {
-        type: "bite",
-        damage: "1d3"
-      }
-    ]
+        type: 'bite',
+        damage: '1d3',
+      },
+    ],
   },
   {
     mId: 4,
@@ -69,10 +69,10 @@ export const MONSTERS: MonsterDefinition[] = [
     ac: 7,
     attacks: [
       {
-        type: "bite",
-        damage: "1d3"
-      }
-    ]
+        type: 'bite',
+        damage: '1d3',
+      },
+    ],
   },
   {
     mId: 5,
@@ -87,9 +87,9 @@ export const MONSTERS: MonsterDefinition[] = [
     ac: 10,
     attacks: [
       {
-        type: "weapon",
-        damage: '2d4'
-      }
-    ]
-  }
+        type: 'weapon',
+        damage: '2d4',
+      },
+    ],
+  },
 ];

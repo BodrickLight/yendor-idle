@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LogService } from '../log.service';
 import { LogMessage } from '../logMessage';
 import { LogType } from '../logType';
@@ -9,6 +9,7 @@ import { LogType } from '../logType';
   styleUrls: ['./log.component.scss'],
 })
 export class LogComponent {
+  // eslint-disable-next-line no-empty-function
   constructor(public logService: LogService) {}
 
   getColor(message: LogMessage): string {

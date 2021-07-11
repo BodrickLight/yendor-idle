@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LocalStorageService } from '../local-storage.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { LocalStorageService } from '../local-storage.service';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
+  // eslint-disable-next-line no-empty-function
   constructor(private storage: LocalStorageService) {}
 
   hardReset() {

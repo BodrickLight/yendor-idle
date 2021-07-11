@@ -9,9 +9,25 @@ import { LogType } from './logType';
 })
 export class HeroService {
   hp: LimitedResource;
+
   ac: number;
+
   xp: number;
+
   xl: number;
+
+  xpBreakpoints = [
+    20,
+    40,
+    80,
+    160,
+    320,
+    640,
+    1280,
+    2560,
+    5120,
+    10000,
+  ];
 
   constructor(private logger: LogService) {
     this.hp = {
@@ -26,24 +42,11 @@ export class HeroService {
   addXp(xp: number) {
     this.xp += xp;
     if (this.xp > this.xpBreakpoints[this.xl - 1]) {
-      this.xl++;
-      var hpIncrease = roll("1d10").result;
+      this.xl += 1;
+      const hpIncrease = roll('1d10').result;
       this.hp.current += hpIncrease;
       this.hp.max += hpIncrease;
-      this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp)
+      this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp);
     }
   }
-
-  xpBreakpoints = [
-    20,
-    40,
-    80,
-    160,
-    320,
-    640,
-    1280,
-    2560,
-    5120,
-    10000
-  ];
 }

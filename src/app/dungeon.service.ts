@@ -8,6 +8,7 @@ import { DungeonLevelGenerator } from './dungeonLevelGenerator';
 })
 export class DungeonService {
   currentLevel: number;
+
   level: DungeonLevel;
 
   constructor() {
@@ -21,15 +22,15 @@ export class DungeonService {
   }
 
   generateLevel() {
-    var generator = new DungeonLevelGenerator();
-    var level = generator.generate(this.currentLevel);
+    const generator = new DungeonLevelGenerator();
+    const level = generator.generate(this.currentLevel);
     this.level = level;
   }
 
   update() {
     this.level.update();
     if (this.level.complete) {
-      this.currentLevel++;
+      this.currentLevel += 1;
       this.generateLevel();
     }
   }

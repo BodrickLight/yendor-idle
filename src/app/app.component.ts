@@ -7,6 +7,8 @@ import { GameService } from './game.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public game: GameService) {}
   title = 'Yendor Idle';
+
+  // eslint-disable-next-line no-empty-function
+  constructor(public game: GameService) {}
 }

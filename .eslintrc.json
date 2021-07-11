@@ -15,10 +15,26 @@
         "createDefaultProgram": true
       },
       "extends": [
+        "airbnb-angular",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "linebreak-style": ["error", "windows"],
+        "no-unused-vars": 0,
+        "no-shadow": 0,
+        "@typescript-eslint/camelcase": 0,
+        "@typescript-eslint/class-name-casing": 0,
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "js": "never",
+            "jsx": "never",
+            "ts": "never",
+            "tsx": "never"
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -45,7 +61,6 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
-        //"indent": ["error", 2]
       }
     }
   ]
