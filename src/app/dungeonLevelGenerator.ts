@@ -3,6 +3,7 @@ import { MonsterGenerator } from './monsterGenerator';
 import { MONSTERS } from './monsters';
 import { Encounter } from './encounter';
 import { HeroService } from './hero.service';
+import { MonsterDefinition } from './monsterDefiniton';
 
 export class DungeonLevelGenerator {
   generate(hero: HeroService, dungeonLevel: number): DungeonLevel {
@@ -31,7 +32,13 @@ export class DungeonLevelGenerator {
     const suitableMonsters = MONSTERS
       .filter((x) => x.difficulty > minDifficulty)
       .filter((x) => x.difficulty <= maxDifficulty);
-    const monsterType = suitableMonsters[Math.floor(Math.random() * suitableMonsters.length)];
+
+    const weighted: MonsterDefinition [] = [];
+    suitableMonsters.forEach((m) => {
+      Array(m.frequency).fill(m).forEach((x) => weighted.push(x));
+    });
+
+    const monsterType = weighted[Math.floor(Math.random() * weighted.length)];
     return {
       monsters: [mGenerator.generate(monsterType.mId)],
     };
