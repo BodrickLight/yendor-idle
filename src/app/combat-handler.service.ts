@@ -30,6 +30,10 @@ export class CombatHandlerService {
 
     this.attackMonster(monster);
 
+    if (monster.hp.current <= 0) {
+      return;
+    }
+
     monster.definition.attacks.forEach((attack, i) => {
       this.attackHero(monster, attack, i);
     });
