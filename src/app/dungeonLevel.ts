@@ -7,8 +7,6 @@ export class DungeonLevel {
 
   floorSize: number;
 
-  encounterNumber: number;
-
   private currentEncounterIdx: number;
 
   constructor(
@@ -17,9 +15,18 @@ export class DungeonLevel {
   ) {
     this.complete = false;
     this.currentEncounterIdx = 0;
-    this.encounterNumber = this.currentEncounterIdx + 1;
     this.currentEncounter = this.encounters[this.currentEncounterIdx];
     this.floorSize = encounters.length;
+  }
+
+  moveToNextEncounter() {
+    if (this.complete || !this.currentEncounter) {
+      return;
+    }
+
+    this.currentEncounterIdx += 1;
+    this.currentEncounter = this.encounters[this.currentEncounterIdx];
+    this.complete = this.currentEncounterIdx >= this.encounters.length;
   }
 
   update() {
@@ -27,12 +34,6 @@ export class DungeonLevel {
       return;
     }
 
-    if (this.currentEncounter.monsters.every((m) => !m.alive)) {
-      this.currentEncounterIdx += 1;
-      this.encounterNumber = this.currentEncounterIdx + 1;
-      this.currentEncounter = this.encounters[this.currentEncounterIdx];
-    }
-
-    this.complete = this.currentEncounterIdx >= this.encounters.length;
+    this.currentEncounter.monsters = this.currentEncounter.monsters.filter((x) => x.alive);
   }
 }

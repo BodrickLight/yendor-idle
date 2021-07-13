@@ -49,4 +49,27 @@ export class HeroService {
       this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp);
     }
   }
+
+  update(passedTurns: number, currentTurns: number) {
+    const regenRate = this.getRegenRate();
+    const previousTurns = currentTurns - passedTurns;
+    const regen = Math.floor(currentTurns / regenRate) - Math.floor(previousTurns / regenRate);
+    this.hp.current = Math.min(this.hp.max, this.hp.current + regen);
+  }
+
+  getRegenRate() {
+    switch (this.xl) {
+      case 1: return 15;
+      case 2: return 11;
+      case 3: return 9;
+      case 4: return 8;
+      case 5: return 7;
+      case 6: return 6;
+      case 7:
+      case 8:
+        return 5;
+      case 9: return 4;
+      default: return 3;
+    }
+  }
 }

@@ -13,7 +13,7 @@ export class EncounterComponent {
   public getColor(monster: Monster) {
     const health = monster.hpPercentage;
     if (health > 0.5) {
-      return 'white';
+      return 'green';
     } if (health > 0.25) {
       return 'yellow';
     }

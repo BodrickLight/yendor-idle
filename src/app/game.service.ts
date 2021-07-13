@@ -5,6 +5,7 @@ import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LocalStorageService } from './local-storage.service';
 import { LogService } from './log.service';
+import { StrategyService } from './strategy.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,8 @@ export class GameService {
 
   public deathCount = 0;
 
+  public turns!: number;
+
   private timer!: number;
 
   constructor(
@@ -22,6 +25,7 @@ export class GameService {
     private combatHandler: CombatHandlerService,
     private logger: LogService,
     private storage: LocalStorageService,
+    private strategy: StrategyService,
   ) {
     const save = storage.load();
     if (save && save.deathCount) {
@@ -32,12 +36,15 @@ export class GameService {
 
   enterDungeon() {
     this.dungeon.reset();
+    this.turns = 0;
     this.timer = window.setInterval(() => this.tick(), 100);
   }
 
   tick() {
-    this.combatHandler.resolveCombat();
-    this.dungeon.update();
+    const nextAction = this.strategy.getNextAction();
+    const passedTime = this.dungeon.executeAction(nextAction);
+    this.turns += passedTime;
+
     if (this.hero.hp.current <= 0) {
       this.logger.log('You die...', LogType.HeroDeath);
       this.deathCount += 1;
@@ -45,6 +52,9 @@ export class GameService {
         deathCount: this.deathCount,
       });
       window.clearInterval(this.timer);
+      return;
     }
+
+    this.hero.update(passedTime, this.turns);
   }
 }
