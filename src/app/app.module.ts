@@ -6,6 +6,7 @@ import { CombatComponent } from './combat/combat.component';
 import { LogComponent } from './log/log.component';
 import { MonsterComponent } from './monster/monster.component';
 import { SettingsComponent } from './settings/settings.component';
+import { EncounterComponent } from './encounter/encounter.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { SettingsComponent } from './settings/settings.component';
     LogComponent,
     MonsterComponent,
     SettingsComponent,
+    EncounterComponent,
   ],
   imports: [BrowserModule],
   providers: [],

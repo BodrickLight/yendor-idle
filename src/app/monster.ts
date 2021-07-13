@@ -3,24 +3,28 @@ import { LimitedResource } from './limitedResource';
 import { MonsterDefinition } from './monsterDefiniton';
 
 export class Monster {
-  private _hp: LimitedResource;
+  private hp: LimitedResource;
 
   constructor(public definition: MonsterDefinition) {
     const hp = roll(this.getHpDice()).result;
-    this._hp = {
+    this.hp = {
       current: hp,
       max: hp,
     };
   }
 
-  public get alive() { return this._hp.current > 0; }
+  public get alive() { return this.hp.current > 0; }
 
   public getExperience() {
     return this.definition.level * this.definition.level + 1;
   }
 
+  public get hpPercentage() {
+    return this.hp.current / this.hp.max;
+  }
+
   public dealDamage(damage: number) {
-    this._hp.current -= damage;
+    this.hp.current -= damage;
   }
 
   private getHpDice() {

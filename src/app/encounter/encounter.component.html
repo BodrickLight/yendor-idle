@@ -1,0 +1,5 @@
+<div>
+  <div *ngFor="let m of encounter.monsters">
+    <app-monster [monster]="m"></app-monster>&nbsp;<span [style.color]="getColor(m)">{{m.definition.name}}</span>
+  </div>
+</div>
