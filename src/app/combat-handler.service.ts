@@ -30,7 +30,7 @@ export class CombatHandlerService {
 
     this.attackMonster(monster);
 
-    if (monster.hp.current <= 0) {
+    if (!monster.alive) {
       return;
     }
 
@@ -53,9 +53,9 @@ export class CombatHandlerService {
       LogType.HeroAttackHit,
     );
     const damage = roll('1d6').result;
-    monster.hp.current -= damage;
-    if (monster.hp.current <= 0) {
-      this.hero.addXp(monster.definition.experience);
+    monster.dealDamage(damage);
+    if (!monster.alive) {
+      this.hero.addXp(monster.getExperience());
       this.logger.log(
         `You kill the ${monster.definition.name}!`,
         LogType.MonsterDeath,

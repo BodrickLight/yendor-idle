@@ -23,6 +23,7 @@
         "linebreak-style": ["error", "windows"],
         "no-unused-vars": 0,
         "no-shadow": 0,
+        "no-underscore-dangle": 0,
         "@typescript-eslint/camelcase": 0,
         "@typescript-eslint/class-name-casing": 0,
         "import/extensions": [

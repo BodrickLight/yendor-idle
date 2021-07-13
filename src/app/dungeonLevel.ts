@@ -27,7 +27,7 @@ export class DungeonLevel {
       return;
     }
 
-    if (this.currentEncounter.monsters.every((m) => m.hp.current <= 0)) {
+    if (this.currentEncounter.monsters.every((m) => !m.alive)) {
       this.currentEncounterIdx += 1;
       this.encounterNumber = this.currentEncounterIdx + 1;
       this.currentEncounter = this.encounters[this.currentEncounterIdx];

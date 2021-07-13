@@ -5,7 +5,6 @@ export interface MonsterDefinition {
   attacks: Attack[];
   color: string;
   difficulty: number;
-  experience: number;
   frequency: number;
   glyph: string;
   mId: number;
