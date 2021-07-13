@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LogType } from './logType';
-import { CombatHandlerService } from './combat-handler.service';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LocalStorageService } from './local-storage.service';
@@ -22,7 +21,6 @@ export class GameService {
   constructor(
     private hero: HeroService,
     private dungeon: DungeonService,
-    private combatHandler: CombatHandlerService,
     private logger: LogService,
     private storage: LocalStorageService,
     private strategy: StrategyService,
@@ -55,6 +53,7 @@ export class GameService {
       return;
     }
 
+    this.dungeon.maybeSpawnMonsters(passedTime);
     this.hero.update(passedTime, this.turns);
   }
 }

@@ -43,7 +43,7 @@ export class HeroService {
     this.xp += xp;
     if (this.xp > this.xpBreakpoints[this.xl - 1]) {
       this.xl += 1;
-      const hpIncrease = roll('1d10').result;
+      const hpIncrease = roll('1d10 + 1d2').result;
       this.hp.current += hpIncrease;
       this.hp.max += hpIncrease;
       this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp);

@@ -16,7 +16,7 @@ export class DungeonLevelGenerator {
     return new DungeonLevel(dungeonLevel, encounters);
   }
 
-  private generateEncounter(
+  public generateEncounter(
     hero: HeroService,
     dungeonLevel: number,
     mGenerator: MonsterGenerator,

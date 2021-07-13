@@ -5,6 +5,7 @@ import { DungeonLevel } from './dungeonLevel';
 import { DungeonLevelGenerator } from './dungeonLevelGenerator';
 import { HeroService } from './hero.service';
 import { HeroAction } from './heroAction';
+import { MonsterGenerator } from './monsterGenerator';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,17 @@ export class DungeonService {
     this.level = level;
   }
 
+  maybeSpawnMonsters(passedTime: number) {
+    const generator = new DungeonLevelGenerator();
+    const mGenerator = new MonsterGenerator();
+    for (let i = 0; i < passedTime; i++) {
+      if (Math.random() < 1 / 70) {
+        const encounter = generator.generateEncounter(this.hero, this.currentLevel, mGenerator);
+        this.level.addEncounter(encounter);
+      }
+    }
+  }
+
   executeAction(action: HeroAction) {
     switch (action) {
       // case HeroAction.Rest:
@@ -41,7 +53,7 @@ export class DungeonService {
 
       case HeroAction.Explore:
         this.level.moveToNextEncounter();
-        return Math.ceil(10 + Math.random() * 10);
+        return Math.ceil(10 + Math.random() * 5);
       case HeroAction.MeleeAttack:
         if (this.level.currentEncounter) {
           this.combat.attackMonster(this.level.currentEncounter.monsters[0]);

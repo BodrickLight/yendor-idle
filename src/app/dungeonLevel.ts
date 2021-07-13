@@ -1,22 +1,25 @@
 import { Encounter } from './encounter';
 
 export class DungeonLevel {
-  currentEncounter?: Encounter;
-
-  complete: boolean;
-
-  floorSize: number;
-
   private currentEncounterIdx: number;
 
   constructor(
     public readonly level: number,
     private readonly encounters: Encounter[],
   ) {
-    this.complete = false;
     this.currentEncounterIdx = 0;
-    this.currentEncounter = this.encounters[this.currentEncounterIdx];
-    this.floorSize = encounters.length;
+  }
+
+  get currentEncounter() {
+    return this.encounters[this.currentEncounterIdx];
+  }
+
+  get complete() {
+    return this.currentEncounterIdx >= this.encounters.length;
+  }
+
+  addEncounter(encounter: Encounter) {
+    this.encounters.push(encounter);
   }
 
   moveToNextEncounter() {
@@ -25,8 +28,6 @@ export class DungeonLevel {
     }
 
     this.currentEncounterIdx += 1;
-    this.currentEncounter = this.encounters[this.currentEncounterIdx];
-    this.complete = this.currentEncounterIdx >= this.encounters.length;
   }
 
   update() {
