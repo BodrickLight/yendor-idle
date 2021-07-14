@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LogType } from './logType';
 import { DungeonService } from './dungeon.service';
 import { HeroService } from './hero.service';
 import { LocalStorageService } from './local-storage.service';
@@ -43,17 +42,15 @@ export class GameService {
     const passedTime = this.dungeon.executeAction(nextAction);
     this.turns += passedTime;
 
+    this.dungeon.maybeSpawnMonsters(passedTime);
+    this.hero.update(passedTime, this.turns);
+
     if (this.hero.hp.current <= 0) {
-      this.logger.log('You die...', LogType.HeroDeath);
       this.deathCount += 1;
       this.storage.save({
         deathCount: this.deathCount,
       });
       window.clearInterval(this.timer);
-      return;
     }
-
-    this.dungeon.maybeSpawnMonsters(passedTime);
-    this.hero.update(passedTime, this.turns);
   }
 }

@@ -34,7 +34,7 @@ export class DungeonService {
   maybeSpawnMonsters(passedTime: number) {
     const generator = new DungeonLevelGenerator();
     const mGenerator = new MonsterGenerator();
-    for (let i = 0; i < passedTime; i++) {
+    for (let i = 0; i < passedTime; i += 1) {
       if (Math.random() < 1 / 70) {
         const encounter = generator.generateEncounter(this.hero, this.currentLevel, mGenerator);
         this.level.addEncounter(encounter);

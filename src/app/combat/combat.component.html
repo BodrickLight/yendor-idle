@@ -1,6 +1,6 @@
 <h1>Combat</h1>
 
-<div>
+<div style="font-size: 18px;">
   <h2>Hero</h2>
   <div>
     <div>
@@ -15,7 +15,7 @@
   </div>
 
   <div class="container">
-    <pre style="font-size: 18px;">
+    <pre>
       /-----\
       |.....|
       +..@<app-monster *ngIf="dungeon.level.currentEncounter && dungeon.level.currentEncounter.monsters[0]" [monster]="dungeon.level.currentEncounter.monsters[0]"></app-monster><span *ngIf="!dungeon.level.currentEncounter || !dungeon.level.currentEncounter.monsters[0]">.</span>.+
@@ -25,4 +25,5 @@
 
     <app-encounter *ngIf="dungeon.level.currentEncounter" [encounter]="dungeon.level.currentEncounter"></app-encounter>
   </div>
+  <app-hunger-status></app-hunger-status>
 </div>

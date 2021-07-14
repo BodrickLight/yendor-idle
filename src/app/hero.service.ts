@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { LimitedResource } from './limitedResource';
 import { LogService } from './log.service';
 import { LogType } from './logType';
+import { StatusEffect } from './statusEffect';
+import { HungerStatus } from './hungerStatus';
+import { StatusEffectType } from './statusEffectType';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,11 @@ export class HeroService {
 
   xl: number;
 
-  xpBreakpoints = [
+  nutrition: number;
+
+  statusEffects: StatusEffect [];
+
+  private xpBreakpoints = [
     20,
     40,
     80,
@@ -37,6 +44,17 @@ export class HeroService {
     this.ac = 10;
     this.xp = 0;
     this.xl = 1;
+    this.nutrition = 900;
+    this.statusEffects = [];
+  }
+
+  get hungerStatus() {
+    if (this.nutrition > 2000) return HungerStatus.Oversatiated;
+    if (this.nutrition > 1000) return HungerStatus.Satiated;
+    if (this.nutrition > 150) return HungerStatus.NotHungry;
+    if (this.nutrition > 50) return HungerStatus.Hungry;
+    if (this.nutrition > 0) return HungerStatus.Weak;
+    return HungerStatus.Fainting;
   }
 
   addXp(xp: number) {
@@ -51,10 +69,41 @@ export class HeroService {
   }
 
   update(passedTurns: number, currentTurns: number) {
+    if (this.hp.current <= 0) {
+      this.logger.log('You die...', LogType.HeroDeath);
+      return;
+    }
+
     const regenRate = this.getRegenRate();
     const previousTurns = currentTurns - passedTurns;
     const regen = Math.floor(currentTurns / regenRate) - Math.floor(previousTurns / regenRate);
     this.hp.current = Math.min(this.hp.max, this.hp.current + regen);
+
+    this.nutrition -= passedTurns;
+    if (this.nutrition < -280) {
+      this.hp.current = 0;
+      this.logger.log('You have starved to death.', LogType.HeroDeath);
+    }
+  }
+
+  removeStatusEffect(types: StatusEffectType[]) {
+    this.statusEffects = this.statusEffects.filter((x) => !types.some((y) => y === x.type));
+  }
+
+  addStatusEffect(type: StatusEffectType, duration?: number) {
+    const existing = this.statusEffects.filter((x) => x.type === type)[0];
+    if (existing) {
+      if (existing.duration !== undefined && duration !== undefined) {
+        existing.duration += duration;
+      }
+
+      return;
+    }
+
+    this.statusEffects.push({
+      type,
+      duration,
+    });
   }
 
   getRegenRate() {

@@ -7,6 +7,7 @@ import { HeroAction } from './heroAction';
   providedIn: 'root',
 })
 export class StrategyService {
+  // eslint-disable-next-line no-empty-function
   constructor(private hero: HeroService, private dungeon: DungeonService) {}
 
   getNextAction() {
