@@ -1,0 +1,2 @@
+<app-monster *ngIf="getMonster()" [monster]="getMonster()"></app-monster>
+<span *ngIf="!getMonster()" [style.color]="getColor()">{{getGlyph()}}</span>

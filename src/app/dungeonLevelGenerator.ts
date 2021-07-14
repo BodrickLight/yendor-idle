@@ -5,6 +5,7 @@ import { Encounter } from './encounter';
 import { HeroService } from './hero.service';
 import { MonsterDefinition } from './monsterDefiniton';
 import { ItemGenerator } from './itemGenerator';
+import { Offset } from './offset';
 
 export class DungeonLevelGenerator {
   generate(hero: HeroService, dungeonLevel: number): DungeonLevel {
@@ -49,9 +50,29 @@ export class DungeonLevelGenerator {
     });
 
     const monsterType = weighted[Math.floor(Math.random() * weighted.length)];
+    const offset = this.getRandomBoundary();
+    const monster = mGenerator.generate(monsterType.mId, offset);
     return {
-      monsters: [mGenerator.generate(monsterType.mId)],
+      monsters: [monster],
       items,
     };
+  }
+
+  getRandomBoundary(): Offset {
+    let x = Math.floor(Math.random() * 14) - 7;
+    let y = Math.floor(Math.random() * 14) - 7;
+    if (Math.random() > 0.5) {
+      if (Math.random() > 0.5) {
+        x = -7;
+      } else {
+        x = 7;
+      }
+    } else if (Math.random() > 0.5) {
+      y = -7;
+    } else {
+      y = 7;
+    }
+
+    return { x, y };
   }
 }

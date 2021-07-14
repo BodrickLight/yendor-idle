@@ -1,9 +1,7 @@
-export enum HeroAction {
-  Rest = 'rest',
-  Move = 'move',
-  Explore = 'explore',
-  MeleeAttack = 'meleeAttack',
-  Descend = 'descend',
-  Eat = 'eat',
-  PickUp = 'pickUp',
+import { HeroActionType } from './heroActionType';
+import { Offset } from './offset';
+
+export interface HeroAction {
+  type: HeroActionType;
+  direction?: Offset;
 }

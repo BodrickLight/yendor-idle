@@ -1,11 +1,12 @@
 import { roll } from '@airjp73/dice-notation';
 import { LimitedResource } from './limitedResource';
 import { MonsterDefinition } from './monsterDefiniton';
+import { Offset } from './offset';
 
 export class Monster {
   private hp: LimitedResource;
 
-  constructor(public definition: MonsterDefinition) {
+  constructor(public definition: MonsterDefinition, public offset: Offset) {
     const hp = roll(this.getHpDice()).result;
     this.hp = {
       current: hp,

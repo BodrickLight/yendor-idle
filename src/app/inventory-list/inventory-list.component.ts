@@ -7,5 +7,6 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./inventory-list.component.scss'],
 })
 export class InventoryListComponent {
+  // eslint-disable-next-line no-empty-function
   constructor(public hero: HeroService) { }
 }

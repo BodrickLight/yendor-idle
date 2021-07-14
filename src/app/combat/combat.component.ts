@@ -9,5 +9,12 @@ import { HeroService } from '../hero.service';
 })
 export class CombatComponent {
   // eslint-disable-next-line no-empty-function
-  constructor(public hero: HeroService, public dungeon: DungeonService) {}
+  xs: number[];
+
+  ys: number[];
+
+  constructor(public hero: HeroService, public dungeon: DungeonService) {
+    this.xs = Array(15).fill(0).map((_, i) => i - 7);
+    this.ys = Array(15).fill(0).map((_, i) => i - 7);
+  }
 }

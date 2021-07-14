@@ -16,11 +16,7 @@
 
   <div class="container">
     <pre>
-      /-----\
-      |.....|
-      +..@<app-monster *ngIf="dungeon.level.currentEncounter && dungeon.level.currentEncounter.monsters[0]" [monster]="dungeon.level.currentEncounter.monsters[0]"></app-monster><span *ngIf="!dungeon.level.currentEncounter || !dungeon.level.currentEncounter.monsters[0]">.</span>.+
-      |.....|
-      \-----/
+<span *ngFor="let y of ys"><span *ngFor="let x of xs"><app-dungeon-cell [x]="x" [y]="y" [encounter]="dungeon.level.currentEncounter"></app-dungeon-cell></span><br/></span>
     </pre>
 
     <app-encounter *ngIf="dungeon.level.currentEncounter" [encounter]="dungeon.level.currentEncounter"></app-encounter>

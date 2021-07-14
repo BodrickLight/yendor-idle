@@ -9,6 +9,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { EncounterComponent } from './encounter/encounter.component';
 import { HungerStatusComponent } from './hunger-status/hunger-status.component';
 import { InventoryListComponent } from './inventory-list/inventory-list.component';
+import { DungeonCellComponent } from './dungeon-cell/dungeon-cell.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { InventoryListComponent } from './inventory-list/inventory-list.componen
     EncounterComponent,
     HungerStatusComponent,
     InventoryListComponent,
+    DungeonCellComponent,
   ],
   imports: [BrowserModule],
   providers: [],

@@ -5,6 +5,7 @@ import { DungeonLevel } from './dungeonLevel';
 import { DungeonLevelGenerator } from './dungeonLevelGenerator';
 import { HeroService } from './hero.service';
 import { HeroAction } from './heroAction';
+import { HeroActionType } from './heroActionType';
 import { FoodItem } from './inventory/foodItem';
 import { InventoryItemType } from './inventory/inventoryItemType';
 import { ItemGenerator } from './itemGenerator';
@@ -55,31 +56,31 @@ export class DungeonService {
   executeAction(action: HeroAction) {
     let duration = 1;
 
-    switch (action) {
+    switch (action.type) {
       // case HeroAction.Rest:
       // case HeroAction.Move:
-      case HeroAction.Descend:
+      case HeroActionType.Descend:
         this.currentLevel += 1;
         this.generateLevel();
         return Math.ceil(10 + Math.random() * 20);
 
-      case HeroAction.Explore:
+      case HeroActionType.Explore:
         this.level.moveToNextEncounter();
         return Math.ceil(10 + Math.random() * 5);
 
-      case HeroAction.PickUp: {
+      case HeroActionType.PickUp: {
         const item = this.level.currentEncounter.items.splice(0, 1)[0];
         this.hero.inventory.push(item);
         break;
       }
 
-      case HeroAction.MeleeAttack:
+      case HeroActionType.MeleeAttack:
         if (this.level.currentEncounter) {
           this.combat.attackMonster(this.level.currentEncounter.monsters[0]);
         }
         break;
 
-      case HeroAction.Eat: {
+      case HeroActionType.Eat: {
         const food = <FoodItem> this.hero.inventory
           .filter((x) => x.type === InventoryItemType.Food)[0];
         this.hero.eat(food);
@@ -87,16 +88,34 @@ export class DungeonService {
         break;
       }
 
-      default:
+      case HeroActionType.Move:
+        if (
+          action.direction === undefined
+          || action.direction.x === undefined
+          || action.direction.y === undefined
+        ) {
+          throw new Error('No action specified for move.');
+        }
+
+        for (const m of this.level.currentEncounter.monsters) {
+          m.offset.x -= action.direction.x;
+          m.offset.y -= action.direction.y;
+        }
+
         break;
+
+      default:
+        throw new Error(`Unable to perform action ${action.type}`);
     }
 
     this.level.update();
     for (let i = 0; i < duration; i += 1) {
       if (this.level.currentEncounter?.monsters.length) {
         for (const m of this.level.currentEncounter.monsters) {
-          for (let attackNumber = 0; attackNumber < m.definition.attacks.length; attackNumber++) {
-            this.combat.attackHero(m, m.definition.attacks[attackNumber], attackNumber);
+          if (Math.abs(m.offset.x) <= 1 && Math.abs(m.offset.y) <= 1) {
+            for (let attackNumber = 0; attackNumber < m.definition.attacks.length; attackNumber++) {
+              this.combat.attackHero(m, m.definition.attacks[attackNumber], attackNumber);
+            }
           }
         }
       }
