@@ -7,4 +7,5 @@ export enum LogType {
   MonsterDeath = 'monsterDeath',
   HeroDeath = 'heroDeath',
   HeroLevelUp = 'heroLevelUp',
+  EatFood = 'eatFood',
 }

@@ -32,6 +32,7 @@ export class GameService {
   }
 
   enterDungeon() {
+    this.hero.initialize();
     this.dungeon.reset();
     this.turns = 0;
     this.timer = window.setInterval(() => this.tick(), 100);

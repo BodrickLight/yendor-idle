@@ -4,13 +4,16 @@ import { MONSTERS } from './monsters';
 import { Encounter } from './encounter';
 import { HeroService } from './hero.service';
 import { MonsterDefinition } from './monsterDefiniton';
+import { ItemGenerator } from './itemGenerator';
 
 export class DungeonLevelGenerator {
   generate(hero: HeroService, dungeonLevel: number): DungeonLevel {
     const mGenerator = new MonsterGenerator();
+    const iGenerator = new ItemGenerator();
+
     const encounters = [];
     for (let i = 0; i < 10; i += 1) {
-      encounters.push(this.generateEncounter(hero, dungeonLevel, mGenerator));
+      encounters.push(this.generateEncounter(hero, dungeonLevel, mGenerator, iGenerator));
     }
 
     return new DungeonLevel(dungeonLevel, encounters);
@@ -20,10 +23,17 @@ export class DungeonLevelGenerator {
     hero: HeroService,
     dungeonLevel: number,
     mGenerator: MonsterGenerator,
+    iGenerator: ItemGenerator,
   ): Encounter {
+    const items = [];
+    if (Math.random() < 0.05) {
+      items.push(iGenerator.generateItem());
+    }
+
     if (Math.random() > 0.5) {
       return {
         monsters: [],
+        items,
       };
     }
 
@@ -41,6 +51,7 @@ export class DungeonLevelGenerator {
     const monsterType = weighted[Math.floor(Math.random() * weighted.length)];
     return {
       monsters: [mGenerator.generate(monsterType.mId)],
+      items,
     };
   }
 }

@@ -4,4 +4,6 @@ export enum HeroAction {
   Explore = 'explore',
   MeleeAttack = 'meleeAttack',
   Descend = 'descend',
+  Eat = 'eat',
+  PickUp = 'pickUp',
 }

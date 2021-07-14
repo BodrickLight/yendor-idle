@@ -6,6 +6,9 @@ import { LogType } from './logType';
 import { StatusEffect } from './statusEffect';
 import { HungerStatus } from './hungerStatus';
 import { StatusEffectType } from './statusEffectType';
+import { InventoryItem } from './inventory/inventoryItem';
+import { ItemGenerator } from './itemGenerator';
+import { FoodItem } from './inventory/foodItem';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +25,8 @@ export class HeroService {
   nutrition: number;
 
   statusEffects: StatusEffect [];
+
+  inventory: InventoryItem [];
 
   private xpBreakpoints = [
     20,
@@ -46,6 +51,7 @@ export class HeroService {
     this.xl = 1;
     this.nutrition = 900;
     this.statusEffects = [];
+    this.inventory = [];
   }
 
   get hungerStatus() {
@@ -57,6 +63,11 @@ export class HeroService {
     return HungerStatus.Fainting;
   }
 
+  initialize() {
+    const generator = new ItemGenerator();
+    this.inventory.push(generator.generateItem());
+  }
+
   addXp(xp: number) {
     this.xp += xp;
     if (this.xp > this.xpBreakpoints[this.xl - 1]) {
@@ -66,6 +77,16 @@ export class HeroService {
       this.hp.max += hpIncrease;
       this.logger.log(`Welcome to level ${this.xl}!`, LogType.HeroLevelUp);
     }
+  }
+
+  eat(food: FoodItem) {
+    this.removeItem(food);
+    this.nutrition += food.nutrition;
+    this.logger.log(`You eat the ${food.name}.`, LogType.EatFood);
+  }
+
+  removeItem(item: InventoryItem) {
+    this.inventory = this.inventory.filter((x) => x !== item);
   }
 
   update(passedTurns: number, currentTurns: number) {

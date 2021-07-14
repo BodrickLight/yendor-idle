@@ -8,6 +8,7 @@ import { HungerStatus } from '../hungerStatus';
   styleUrls: ['./hunger-status.component.scss'],
 })
 export class HungerStatusComponent {
+  // eslint-disable-next-line no-empty-function
   constructor(private hero: HeroService) { }
 
   getStatus() {
